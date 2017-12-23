@@ -1,34 +1,24 @@
-'use strict';
-const express = require('express');
-const bodyParser = require('body-parser');
-const logger = require('morgan');
-const index = require('./routes/index'); // The index router
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import router from './routes/index';
+import mongodb from './database/mongodb';
 
-const app = express(); // Define our app using Express
+const port = process.env.PORT || 3000;
 
-
-// Setting our port --------------
-let port = process.env.PORT || 8080;
-app.set('port',port);
-
-
-app.use(logger('dev')); // Logging the request info on the console
-// Configure server to use bodyParser()
+let app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(morgan('dev'));
+app.use('/api', router);
 
-
-// REGISTER OUR ROUTES -------------------------------
-app.use('/', index);
-
-
-// START THE SERVER ----------------------------------
-app.listen(app.get('port'), (error) => {
-    if(error){console.log('Error Starting the server')}
-    else{
-        console.log(`Server running on http://localhost:${app.get('port')}`);
-    }
-});
-// ----------------------------------------------------
-
-
+mongodb.getConnection()
+  .then((msg) => {
+    console.log(msg);
+    app.listen(port, () => {
+      console.log(`Server running and listening in http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });

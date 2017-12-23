@@ -1,10 +1,16 @@
-'use strict';
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+let router = express.Router();
 
-// Home route
-router.get('/', (req, res) => {
-    res.send('Welcome to the BeneFit Server');
-});
+import authenticate from '../middlewares/authenticate';
+import userController from '../controllers/userController';
+import dummyController from '../controllers/dummyController';
 
-module.exports = router;
+//user routes
+router.post('/signup', userController.signup);
+router.post('/login', userController.login);
+
+//dummy routes
+router.get('/say-hello', dummyController.sayHello);
+router.get('/private-info', authenticate, dummyController.privateMessage);
+
+export default router;

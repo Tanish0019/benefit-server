@@ -1,29 +1,26 @@
 {
-  "name": "benefit-server",
+  "name": "userstory-backend-es6",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "start-watch": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js --exec babel-node --presets es2015,stage-2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/IOSD/benefit-server.git"
-  },
-  "keywords": [],
-  "author": "",
+  "author": "Borja Tur",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/IOSD/benefit-server/issues"
-  },
-  "homepage": "https://github.com/IOSD/benefit-server#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "mongoose": "^4.13.7",
-    "morgan": "^1.9.0"
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^7.0.0",
+    "mongoose": "^4.4.19",
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
-    "nodemon": "^1.12.6"
+    "babel": "^6.5.2",
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-2": "^6.5.0"
   }
 }
