@@ -1,4 +1,4 @@
-import User from '../models/user';
+import User from '../models/coach';
 import Token from '../common/token';
 import constants from '../constants/constants';
 

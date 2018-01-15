@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
 
-const UserSchema = new mongoose.Schema({
+const CoachSchema = new mongoose.Schema({
   name: String,
   username: {
     type: String,
@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-UserSchema.pre('save', function(next) {
+CoachSchema.pre('save', function(next) {
   var user = this;
   if(!user.isModified('password')) {
     return next();
@@ -35,9 +35,9 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-UserSchema.methods.comparePassword = function(password) {
+CoachSchema.methods.comparePassword = function(password) {
   var user = this;
   return bcrypt.compareSync(password, user.password);
 };
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model('Coach', CoachSchema);
