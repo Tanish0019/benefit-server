@@ -1,20 +1,32 @@
 import mongoose from 'mongoose';
-import * as autoIncrement from "mongoose-auto-increment";
+import bcrypt from "bcrypt-nodejs";
 
 
 const ClientSchema = new mongoose.Schema({
-    name: String,
-    id: Number,
-    email: String,
+    // username == email
+
+    username: {
+        type: String,
+        required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+        select: false
+    },
+
+    name: {
+        type: String,
+        required: true,
+    },
     mobile: String,
     gender: {
         type: String,
         enum: ['male', 'female']
     },
 
-
     coach: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Coach'
     },
     
@@ -23,19 +35,27 @@ const ClientSchema = new mongoose.Schema({
 
     weight: Number,
     height: Number,
-    diet: {
-        type: String,
-        enum: ['veg', 'nonveg']
-    },
-
-
 
 });
 
-ClientSchema.plugin(autoIncrement.plugin, {
-    model: 'Client',
-    field: 'id',
-    startAt: 10000,
+ClientSchema.pre('save', function(next) {
+    var user = this;
+    if(!user.isModified('password')) {
+        return next();
+    }
+    bcrypt.hash(user.password, null, null, (err, hash) => {
+        if(err) {
+            return next(err);
+        }
+        user.password = hash;
+        next();
+    });
 });
+
+ClientSchema.methods.comparePassword = function(password) {
+    var user = this;
+    return bcrypt.compareSync(password, user.password);
+};
+
 
 export default mongoose.model('Client', ClientSchema);

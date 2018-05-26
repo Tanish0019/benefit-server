@@ -1,14 +1,13 @@
-import User from '../models/coach';
+import Client from '../models/client';
 import Token from '../common/token';
 import constants from '../constants/constants';
 
 let authController = {
     signup: (req, res) => {
-      let user = new User({
+      let user = new Client({
         name: req.body.name,
         username: req.body.username,
-        password: req.body.password,
-        email: req.body.email
+        password: req.body.password
       });
 
       let token = new Token(user).getToken();
@@ -26,8 +25,8 @@ let authController = {
     },
 
     login: (req, res) => {
-      User.findOne({
-        email: req.body.email
+      Client.findOne({
+        username: req.body.username
       }).select('name username password').exec((err, user) => {
         if(err) {
           throw err;
