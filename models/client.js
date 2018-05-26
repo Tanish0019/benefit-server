@@ -17,9 +17,9 @@ const ClientSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Coach'
     },
+    
     premium_expiry: Date,
     premium_start: Date,
-
 
     weight: Number,
     height: Number,
@@ -31,7 +31,6 @@ const ClientSchema = new mongoose.Schema({
 
 
 });
-
 
 ClientSchema.plugin(autoIncrement.plugin, {
     model: 'Client',

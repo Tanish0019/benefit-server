@@ -2,7 +2,7 @@ import User from '../models/coach';
 import Token from '../common/token';
 import constants from '../constants/constants';
 
-let userController = {
+let authController = {
     signup: (req, res) => {
       let user = new User({
         name: req.body.name,
@@ -51,4 +51,4 @@ let userController = {
     }
 };
 
-export default userController;
+export default authController;

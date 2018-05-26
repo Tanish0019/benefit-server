@@ -1,10 +1,15 @@
 import express from 'express';
-let router = express.Router();
+
+import authRouter from './auth' ;
 
 // import authenticate from '../middlewares/authenticate';
-import apiRouter from './api' ;
 
-router.use('/api/v1/' , apiRouter);
+
+let router = express.Router();
+
+
+
+router.use('/auth', authRouter);
 
 router.get('/', (req, res) => {
     res.json({
