@@ -32,11 +32,11 @@ let authController = {
           throw err;
         }
         if(!user) {
-          res.send({ message: constants.USER_NOT_EXITS });
+          res.staus(401).send({ message: constants.USER_NOT_EXITS });
         } else {
           let validPassword = user.comparePassword(req.body.password);
           if(!validPassword) {
-            res.send({ message: constants.INVALID_PASS });
+            res.staus(402).send({ message: constants.INVALID_PASS });
           } else {
             let token = new Token(user).getToken();
             res.json({
