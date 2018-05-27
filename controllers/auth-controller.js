@@ -6,7 +6,7 @@ let authController = {
     signup: (req, res) => {
       let user = new Client({
         name: req.body.name,
-        username: req.body.username,
+        email: req.body.email,
         password: req.body.password
       });
 
@@ -26,8 +26,8 @@ let authController = {
 
     login: (req, res) => {
       Client.findOne({
-        username: req.body.username
-      }).select('name username password').exec((err, user) => {
+        email: req.body.email
+      }).select('name email password').exec((err, user) => {
         if(err) {
           throw err;
         }
