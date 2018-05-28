@@ -2,8 +2,6 @@ import Client from '../models/client';
 import Token from '../common/token';
 import constants from '../constants/constants';
 
-
-
 let authController = {
     signup: (req, res) => {
       let user = new Client({
@@ -50,35 +48,6 @@ let authController = {
         }
       });
     }
-
-    loginGoogle: (req, res) => {
-      Client.findOne({
-        email: req.body.email
-      }).select('name email password').exec((err, user) => {
-        if(err) {
-          throw err;
-        }
-        if(!user) {
-          res.status(401).send({ message: constants.USER_NOT_EXITS });
-        } else {
-          let validGoogleToken = 1;//TODO validate google auth token
-          if(!validPassword) {
-            res.status(402).send({ message: "Failed.\nLogin again." });
-          } else {
-            let token = new Token(user).getToken();
-            res.json({
-              success: true,
-              message: constants.LOGIN_SUCCESS,
-              token: token
-            });
-          }
-        }
-      });
-    }
-
-    
 };
-
-
 
 export default authController;
