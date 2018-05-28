@@ -5,7 +5,7 @@ import authController from '../controllers/auth-controller';
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-router.post('/logingoogle', authController.loginGoogle);
+router.post('/login/google', authController.loginGoogle);
 
 
 
