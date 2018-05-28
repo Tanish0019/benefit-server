@@ -11,13 +11,21 @@ let profileController = {
             email : req.decoded.email
         } , req.body , {new: true}).then((client) => {
             res.json(client)
+        } , (err) => {
+            console.log(err);
         })
     } ,
     get : (req, res) => {
-        Client.findOneAndUpdate({
+
+        console.log(req.decoded);
+        console.log(req.body);
+
+        Client.findOne({
             email : req.decoded.email
         }).then((client) => {
             res.json(client);
+        } , (err) => {
+            console.log(err);
         })
     }
 };
