@@ -10,8 +10,6 @@ const ClientSchema = new mongoose.Schema({
         required: true,
         unique : true
     },
-    googleAuthToken: String,
-
     password: {
         type: String,
         required: true,
