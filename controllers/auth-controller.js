@@ -6,7 +6,7 @@ let authController = {
     signup: (req, res) => {
       let user = new Client({
         name: req.body.name,
-        username: req.body.username,
+        email: req.body.email,
         password: req.body.password
       });
 
@@ -26,17 +26,17 @@ let authController = {
 
     login: (req, res) => {
       Client.findOne({
-        username: req.body.username
-      }).select('name username password').exec((err, user) => {
+        email: req.body.email
+      }).select('name email password').exec((err, user) => {
         if(err) {
           throw err;
         }
         if(!user) {
-          res.staus(401).send({ message: constants.USER_NOT_EXITS });
+          res.status(401).send({ message: constants.USER_NOT_EXITS });
         } else {
           let validPassword = user.comparePassword(req.body.password);
           if(!validPassword) {
-            res.staus(402).send({ message: constants.INVALID_PASS });
+            res.status(402).send({ message: constants.INVALID_PASS });
           } else {
             let token = new Token(user).getToken();
             res.json({

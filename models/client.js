@@ -5,9 +5,10 @@ import bcrypt from "bcrypt-nodejs";
 const ClientSchema = new mongoose.Schema({
     // username == email
 
-    username: {
+    email: {
         type: String,
         required: true,
+        unique : true
     },
     password: {
         type: String,
@@ -24,6 +25,12 @@ const ClientSchema = new mongoose.Schema({
         type: String,
         enum: ['male', 'female']
     },
+    age: Number,
+    weight: Number,
+    height: Number,
+
+    goal : Number ,
+    lifestyle : Number ,
 
     coach: {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,9 +39,6 @@ const ClientSchema = new mongoose.Schema({
     
     premium_expiry: Date,
     premium_start: Date,
-
-    weight: Number,
-    height: Number,
 
 });
 

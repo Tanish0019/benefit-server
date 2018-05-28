@@ -7,7 +7,7 @@ export default class Token {
         this.token = jsonwebtoken.sign({
             id: user._id,
             name: user.name,
-            username: user.username
+            email: user.email
         }, secretKey, {
             expiresIn: 60*60
         });
