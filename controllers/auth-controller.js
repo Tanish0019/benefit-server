@@ -49,7 +49,7 @@ let authController = {
           }
         }
       });
-    },
+    }
 
     loginGoogle: (req, res) => {
       Client.findOne({
