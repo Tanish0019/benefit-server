@@ -47,6 +47,32 @@ let authController = {
           }
         }
       });
+    } ,
+    googleLogin: (req, res) => {
+        Client.findOne({
+            email: req.body.email,
+            googleToken: req.body.googleToken
+        }).exec((err, user) => {
+            if(err) {
+                throw err;
+            }
+            if(!user) {
+                res.status(401).send({ message: constants.USER_NOT_EXITS });
+            } else {
+                let validToken = 1;
+                //TODO: token verifaction with sever
+                if(!validToken) {
+                    res.status(402).send({ message: constants.INVALID_PASS });
+                } else {
+                    let token = new Token(user).getToken();
+                    res.json({
+                        success: true,
+                        message: constants.LOGIN_SUCCESS,
+                        token: token
+                    });
+                }
+            }
+        });
     }
 };
 

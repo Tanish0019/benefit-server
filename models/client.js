@@ -15,6 +15,8 @@ const ClientSchema = new mongoose.Schema({
         required: true,
         select: false
     },
+    googleToken: String,
+
 
     name: {
         type: String,
