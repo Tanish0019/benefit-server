@@ -27,6 +27,24 @@ let profileController = {
         } , (err) => {
             console.log(err);
         })
+    },
+
+    editMeasurements: (req, res) => {
+        Client.findOneAndUpdate({
+            _id: req.decoded.id
+        }, {$set:{measurements: req.body.measurements}}, 
+        {new: true}).then(data => {
+            res.json({
+                success: true,
+                message: "measurements updated",
+                data: data
+            });
+        }, (err) => {
+            res.json({
+                success: false,
+                message: "Client not found"
+            });
+        });
     }
 };
 
