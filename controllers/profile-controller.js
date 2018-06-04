@@ -30,20 +30,26 @@ let profileController = {
     },
 
     editMeasurements: (req, res) => {
-        Client.findOneAndUpdate({
-            _id: req.decoded.id
-        }, {$set:{measurements: req.body.measurements}}, 
-        {new: true}).then(data => {
-            res.json({
-                success: true,
-                message: "measurements updated",
-                data: data
-            });
-        }, (err) => {
-            res.json({
-                success: false,
-                message: "Client not found"
-            });
+        Client.findOne({
+            _id : req.decoded.id
+        }).then(client => {
+            let updatedMeasurements = {
+                ...client.measurements,
+                ...req.body.measurements
+            }
+            client.measurements = updatedMeasurements;
+            client.save().then(data => {
+                res.json({
+                    success: true,
+                    message: "measurements updated",
+                    data: data.measurements
+                });
+            }, (err) => {
+                res.json({
+                    success: false,
+                    message: "some error occured"
+                });
+            })
         });
     }
 };
