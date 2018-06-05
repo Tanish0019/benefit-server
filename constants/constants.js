@@ -10,7 +10,8 @@ const constants = {
    CREATED_USER: 'User has been created!',
    LOGIN_SUCCESS: 'Successfuly login!',
    USER_NOT_EXITS: 'User doesn´t exist',
-   INVALID_PASS: 'Invalid Password.'
+   INVALID_PASS: 'Invalid Password.' ,
+   INVALID_GTOKEN: 'Invalid Google Token.'
 }
 
 export default constants;

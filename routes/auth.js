@@ -4,7 +4,7 @@ let router = express.Router();
 import authController from '../controllers/auth-controller';
 
 router.post('/signup', authController.signup);
+router.post('/login/google', authController.googleLogin);
 router.post('/login', authController.login);
-router.post('/logingoogle', authController.googleLogin);
 
 export default router ;
