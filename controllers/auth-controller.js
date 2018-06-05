@@ -2,15 +2,18 @@ import Client from '../models/client';
 import Token from '../common/token';
 import constants from '../constants/constants';
 import {OAuth2Client} from 'google-auth-library';
+import config from '../config/config' ;
 
-const CLIENT_ID = '352356064520-5qtenuib63i9ukps3o6s50m97scg8050.apps.googleusercontent.com';
+const IOS_CLIENT_ID = config.IOS_CLIENT_ID ;
+// const ANDROID_CLIENT_ID = config.ANDROID_CLIENT_ID ;
+const WEB_CLIENT_ID = config.WEB_CLIENT_ID;
 
-const client = new OAuth2Client(CLIENT_ID);
+const client = new OAuth2Client(WEB_CLIENT_ID);
 
 async function verify(token) {
     const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: CLIENT_ID
+        audience: [IOS_CLIENT_ID , WEB_CLIENT_ID]
     });
 
     const payload = ticket.getPayload();
@@ -102,6 +105,7 @@ let authController = {
                         });
                     })
                     .catch(err => {
+                        console.log(err);
                         res.status(402).send({message: constants.INVALID_GTOKEN});
                     })
             }).catch(err => {
