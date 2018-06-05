@@ -44,6 +44,11 @@ let authController = {
     },
 
     login: (req, res) => {
+
+        if(!req.body.password){
+            throw new Error("No Password Provided");
+        }
+
         Client.findOne({
             email: req.body.email
         }).select('name email password').exec((err, user) => {
