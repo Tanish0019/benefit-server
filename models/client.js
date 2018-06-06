@@ -12,11 +12,9 @@ const ClientSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: false,
         select: false
     },
     googleToken: String,
-
 
     name: {
         type: String,
@@ -59,7 +57,7 @@ ClientSchema.pre('save', function(next) {
 });
 
 ClientSchema.methods.comparePassword = function(password) {
-    var user = this;
+    let user = this;
     return bcrypt.compareSync(password, user.password);
 };
 

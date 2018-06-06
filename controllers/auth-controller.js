@@ -4,7 +4,7 @@ import constants from '../constants/constants';
 import {OAuth2Client} from 'google-auth-library';
 import config from '../config/config' ;
 
-const IOS_CLIENT_ID = config.IOS_CLIENT_ID ;
+const IOS_CLIENT_ID = config.IOS_CLIENT_ID;
 // const ANDROID_CLIENT_ID = config.ANDROID_CLIENT_ID ;
 const WEB_CLIENT_ID = config.WEB_CLIENT_ID;
 
@@ -13,7 +13,7 @@ const client = new OAuth2Client(WEB_CLIENT_ID);
 async function verify(token) {
     const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: [IOS_CLIENT_ID , WEB_CLIENT_ID]
+        audience: [IOS_CLIENT_ID, WEB_CLIENT_ID]
     });
 
     const payload = ticket.getPayload();
@@ -29,7 +29,7 @@ let authController = {
             password: req.body.password
         });
 
-        if(!req.body.password){
+        if (!req.body.password) {
             throw new Error("No Password Provided");
         }
 
@@ -48,18 +48,16 @@ let authController = {
 
     login: (req, res) => {
 
-        if(!req.body.password){
+        if (!req.body.password) {
             throw new Error("No Password Provided");
         }
 
         Client.findOne({
             email: req.body.email
-        }).select('name email password').exec((err, user) => {
-            if (err) {
-                throw err;
-            }
+        }).then((user) => {
             if (!user) {
-                res.status(401).send({message: constants.USER_NOT_EXITS});
+                throw new Error(constants.USER_NOT_EXITS);
+                // res.status(401).send({message: constants.USER_NOT_EXITS});
             }
             let validPassword = user.comparePassword(req.body.password);
             if (!validPassword) {
@@ -72,7 +70,8 @@ let authController = {
                     token: token
                 });
             }
-
+        }).catch(err => {
+            throw err
         });
     },
     googleLogin: (req, res) => {
@@ -110,7 +109,7 @@ let authController = {
                     })
             }).catch(err => {
                 console.error(err);
-                throw err ;
+                throw err;
             })
 
 
