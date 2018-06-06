@@ -79,7 +79,7 @@ let authController = {
             throw err;
         });
     },
-    googleLogin: (req, res) => {
+    googleLogin: (req, res , next) => {
         // console.log(req.body)
         Client.findOne({
             email: req.body.email
@@ -109,6 +109,7 @@ let authController = {
                         });
                     })
                     .catch(err => {
+                        // console.log("Catched");
                         console.error(err);
                         next(new Error(constants.INVALID_GTOKEN));
                     })

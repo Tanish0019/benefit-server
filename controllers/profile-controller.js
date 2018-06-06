@@ -3,7 +3,7 @@ import Token from '../common/token';
 import constants from '../constants/constants';
 
 let profileController = {
-    update : (req, res) => {
+    update : (req, res , next) => {
 
         // console.log(req.decoded);
         // console.log(req.body);
@@ -18,7 +18,7 @@ let profileController = {
             next(new Error('Error Retrieving Profile'))
         })
     } ,
-    get : (req, res) => {
+    get : (req, res , next) => {
 
         // console.log(req.decoded);
         // console.log(req.body);
@@ -34,7 +34,7 @@ let profileController = {
         })
     },
 
-    editMeasurements: (req, res) => {
+    editMeasurements: (req, res ,next) => {
         Client.findOne({
             _id : req.decoded.id
         }).then(client => {
