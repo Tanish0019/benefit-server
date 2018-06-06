@@ -27,6 +27,30 @@ let profileController = {
         } , (err) => {
             console.log(err);
         })
+    },
+
+    editMeasurements: (req, res) => {
+        Client.findOne({
+            _id : req.decoded.id
+        }).then(client => {
+            let updatedMeasurements = {
+                ...client.measurements,
+                ...req.body.measurements
+            }
+            client.measurements = updatedMeasurements;
+            client.save().then(data => {
+                res.json({
+                    success: true,
+                    message: "measurements updated",
+                    data: data.measurements
+                });
+            }, (err) => {
+                res.json({
+                    success: false,
+                    message: "some error occured"
+                });
+            })
+        });
     }
 };
 

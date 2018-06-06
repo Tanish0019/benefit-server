@@ -25,10 +25,16 @@ const ClientSchema = new mongoose.Schema({
         type: String,
         enum: ['male', 'female']
     },
+    
     age: Number,
-    weight: Number,
-    height: Number,
-
+    measurements: {
+        weight: Number,
+        height: Number,
+        waist: String,
+        neck: String,
+        hip: String
+    },
+    
     goal : Number ,
     lifestyle : Number ,
 
