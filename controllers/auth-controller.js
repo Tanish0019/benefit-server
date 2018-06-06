@@ -22,7 +22,7 @@ async function verify(token) {
 
 
 let authController = {
-    signup: (req, res) => {
+    signup: (req, res ,next) => {
         let user = new Client({
             name: req.body.name,
             email: req.body.email,
@@ -30,13 +30,13 @@ let authController = {
         });
 
         if (!req.body.password) {
-            throw new Error("No Password Provided");
+            next(new Error("No Password Provided"));
         }
 
         let token = new Token(user).getToken();
         user.save((err) => {
             if (err) {
-                throw err;
+                next(new Error("Error in Saving Profile"))
             }
             res.json({
                 success: true,
@@ -46,22 +46,27 @@ let authController = {
         });
     },
 
-    login: (req, res) => {
-
-        if (!req.body.password) {
-            throw new Error("No Password Provided");
-        }
-
+    login: (req, res , next) => {
         Client.findOne({
             email: req.body.email
-        }).then((user) => {
+        }).select('name username password').then((user) => {
+            console.log(!user);
+
             if (!user) {
-                throw new Error(constants.USER_NOT_EXITS);
-                // res.status(401).send({message: constants.USER_NOT_EXITS});
+                next(new Error(constants.USER_NOT_EXITS));
             }
+            if (!req.body.password) {
+                next(new Error("No Password Provided"));
+            }
+            if (!user.password) {
+                next(new Error("Use Google Login"));
+            }
+
             let validPassword = user.comparePassword(req.body.password);
+
             if (!validPassword) {
-                res.status(402).send({message: constants.INVALID_PASS});
+                next(new Error(constants.INVALID_PASS));
+                // res.status(402).send({message: constants.INVALID_PASS});
             } else {
                 let token = new Token(user).getToken();
                 res.json({
@@ -71,7 +76,7 @@ let authController = {
                 });
             }
         }).catch(err => {
-            throw err
+            throw err;
         });
     },
     googleLogin: (req, res) => {
@@ -104,12 +109,12 @@ let authController = {
                         });
                     })
                     .catch(err => {
-                        console.log(err);
-                        res.status(402).send({message: constants.INVALID_GTOKEN});
+                        console.error(err);
+                        next(new Error(constants.INVALID_GTOKEN));
                     })
             }).catch(err => {
                 console.error(err);
-                throw err;
+                next(err);
             })
 
 
