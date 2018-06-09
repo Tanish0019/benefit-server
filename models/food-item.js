@@ -1,17 +1,27 @@
 import mongoose from 'mongoose';
+import mongooseSearchable from 'mongoose-searchable'
 
 const FoodItemSchema = new mongoose.Schema({
 
-    status : String,
-    starttime : Date ,
-    endtime : Date ,
-    w_rating : String ,
-    e_rating : String ,
-    comp_routines : Number ,
-    workout : {
-        type : Schema.Types.ObjectId ,
-        ref : 'Workout'
-    }
+    name : String ,
+    calories : Number ,
+    proteins : Number ,
+    fats : Number ,
+    carbs : Number ,
+    fibre : Number ,
+    sugar : Number ,
+    unit : String ,
+    size : {
+        piece : Number ,
+        bowl : Number ,
+        katori : Number,
+        serve : Number
+    } ,
+    query : String
 });
+
+FoodItemSchema.plugin(mongooseSearchable , {
+    fields:['query','name'],
+})
 
 export default mongoose.model('UserWorkout', FoodItemSchema);
