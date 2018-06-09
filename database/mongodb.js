@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import config from '../config/config';
 import constants from '../constants/constants';
+mongoose.Promise = Promise;
+
 
 let mongodb = {
   getConnection: () => {

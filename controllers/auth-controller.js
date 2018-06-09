@@ -51,7 +51,7 @@ let authController = {
     login: (req, res, next) => {
         Client.findOne({
             email: req.body.email
-        }).select('name username password').then((user) => {
+        }).select('name email password').then((user) => {
             console.log(!user);
 
             if (!user) {
@@ -70,6 +70,7 @@ let authController = {
                 next(new Error(constants.INVALID_PASS));
                 // res.status(402).send({message: constants.INVALID_PASS});
             } else {
+                console.log("User :" , user);
                 let token = new Token(user).getToken();
                 res.json({
                     success: true,
