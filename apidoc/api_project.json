@@ -1,0 +1,1 @@
+{  "name": "Benefit",  "description": "Base URL : api/v1",  "version": "1.0.0",  "sampleUrl": false,  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2018-06-11T10:50:34.838Z",    "url": "http://apidocjs.com",    "version": "0.17.6"  }}
