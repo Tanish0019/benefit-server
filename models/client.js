@@ -27,14 +27,6 @@ const ClientSchema = new mongoose.Schema({
     },
     
     age: Number,
-    measurements: {
-        weight: Number,
-        height: Number,
-        waist: String,
-        neck: String,
-        hip: String
-    },
-    
     goal : Number ,
     lifestyle : Number ,
 

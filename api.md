@@ -7,12 +7,12 @@ Use Postman for Accessing Whole Structure.
 
 ###### Auth
 
-- POST /auth/signup => Accept Username( Email ) , Password , Name
-- POST /auth/login => Accept Username( Email ) , Password and Return JWT for accessing private routes.
-- POST /auth/login/google => Google OAuth2 login
+- /auth/signup , POST ,  Accept Username( Email ) , Password , Name
+- /auth/login , POST , Accept Username( Email ) , Password and Return JWT for accessing private routes.
+- /auth/login/google , POST , Accept Username( Email ) , GoogleToken and Return JWT for accessing private routes.
 
 ###### Profile
 
-- GET /profile => finds client and sends it back
-- POST /profile/update => updates client info
-- POST /profile/measurements => Accepts measurements to add or update them
+- /profile , GET,  Getting Details of Current Profile
+- /profile/update , POST , Updating the Current Profile 
+- /profile/measurements , POST , Updating the Current Profile Measurements
