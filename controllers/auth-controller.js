@@ -38,13 +38,13 @@ let authController = {
         let token = new Token(user).getToken();
         user.save((err) => {
             if (err) {
-                next(new Error("Error in Saving Profile"))
-            }
+                return next(new Error("Error in Saving Profile"))
+            } 
             res.json({
                 success: true,
                 message: constants.CREATED_USER,
                 token: token
-            });
+            }); 
         });
     },
 
