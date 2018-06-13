@@ -16,4 +16,3 @@ Use Postman for Accessing Whole Structure.
 - /profile , GET,  Getting Details of Current Profile
 - /profile/update , POST , Updating the Current Profile 
 - /profile/measurements , POST , Updating the Current Profile Measurements
- 
