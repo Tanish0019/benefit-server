@@ -24,4 +24,4 @@ FoodItemSchema.plugin(mongooseSearchable , {
     fields:['query','name'],
 })
 
-export default mongoose.model('UserWorkout', FoodItemSchema);
+export default mongoose.model('FoodItem', FoodItemSchema);
