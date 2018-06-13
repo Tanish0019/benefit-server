@@ -3,6 +3,10 @@ import express from 'express';
 import authRouter from './auth' ;
 import profileRoutes from './profile' ;
 import mealLogRoutes from './meallog' ;
+
+// CoachRoutes
+import coachAuthRoutes from './coach/auth';
+
 import authenticate from "../middlewares/authenticate";
 
 
@@ -12,6 +16,7 @@ let router = express.Router();
 router.use('/auth', authRouter);
 router.use('/profile', authenticate, profileRoutes);
 router.use('/mealLog', authenticate, mealLogRoutes);
+router.use('/coach/auth', coachAuthRoutes);
 
 router.get('/', (req, res) => {
     res.json({
