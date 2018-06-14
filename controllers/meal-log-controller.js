@@ -1,5 +1,6 @@
 import FoodItem from '../models/food-item'
 import constants from '../constants/constants';
+import MealLog from '../models/meallog';
 import mealData from './import' ;
 
 function escapeRegex(text) {
@@ -50,9 +51,63 @@ let mealLogController = {
                 data : items
             })
         });
+    },
 
+    getTypeDate: (req, res, next) => {
+        MealLog.findOne({client: req.decoded.id, type: req.params.type}, (error, mealLog) => {
+            if(error){
+                return next(new Error("Could not find client"));
+            }
+            if (!mealLog) {
+                return next(new Error("MealLog does not exist"));
+            }
+            let data = {
+                date: mealLog.date,
+                type: mealLog.type
+            }
+            res.json({
+                success: true,
+                data
+            });
+        });
+    },
 
-
+    postMealLog: (req, res, next) => {
+        MealLog.findOne({client: req.decoded.id}, (error, mealLog) => {
+            if(error) {
+                return next(new Error("Some Error Occured"));
+            }
+            if(mealLog) {
+                mealLog.date = req.body.date;
+                mealLog.type = req.params.type;
+                mealLog.save((err, data) => {
+                    if(err) {
+                        return next(new Error("Could not save meal log"));
+                    }
+                    res.json({
+                        success: true,
+                        data: data
+                    });
+                })  
+            } else {
+                let data = {
+                    client: req.decoded.id,
+                    type: req.params.type,
+                    date: req.body.date
+                };
+                const newMealLog = new MealLog(data);
+                newMealLog.save((error, data) => {
+                    if(error) {
+                        return next(new Error("Could not save meal log"));
+                    }
+                    res.json({
+                        success: true,
+                        data: data
+                    });
+                });
+            }
+            
+        })
     }
 }
 
