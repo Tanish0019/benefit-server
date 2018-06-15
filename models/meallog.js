@@ -3,6 +3,11 @@ import mongoose from 'mongoose';
 const MealLogSchema = new mongoose.Schema({
 
     date: String,
+    type: String,
+    food: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FoodItem',
+    }],
     client: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Client'
