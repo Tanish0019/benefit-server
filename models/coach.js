@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt-nodejs';
 
 const CoachSchema = new mongoose.Schema({
   name: String,
-  username: {
+  email: {
     type: String,
     required: true,
     index: {
@@ -14,10 +14,6 @@ const CoachSchema = new mongoose.Schema({
     type: String,
     required: true,
     select: false
-  },
-  email: {
-    type: String,
-    required: true
   }
 });
 

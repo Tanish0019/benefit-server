@@ -6,7 +6,6 @@ const authController = {
 	signup: (req, res, next) => {
         let coach = new Coach({
             name: req.body.name,
-            username: req.body.username,
             email: req.body.email,
             password: req.body.password
         });
@@ -31,7 +30,7 @@ const authController = {
     login: (req, res, next) => {
         Coach.findOne({
             email: req.body.email
-        }).select('name email password username').then((coach) => {
+        }).select('name email password').then((coach) => {
 
             if (!coach) {
                 next(new Error(constants.USER_NOT_EXITS));

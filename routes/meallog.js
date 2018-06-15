@@ -5,8 +5,8 @@ let router = express.Router();
 
 router.get('/import', mealLogController.importItems);
 router.get('/food/search/:keyword', mealLogController.searchFoodItem);
-router.get('/details/:type', mealLogController.getTypeDate);
+router.get('/details/', mealLogController.getTypeDate);
 
-router.post('/details/:type', mealLogController.postMealLog)
+router.post('/details/', mealLogController.postMealLog)
 
 export default router ;

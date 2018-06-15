@@ -54,32 +54,38 @@ let mealLogController = {
     },
 
     getTypeDate: (req, res, next) => {
-        MealLog.findOne({client: req.decoded.id, type: req.params.type}, (error, mealLog) => {
-            if(error){
-                return next(new Error("Could not find client"));
-            }
+
+        console.log(req.query)
+
+        MealLog.findOne({
+            client: req.decoded.id,
+            type: req.query.type,
+            date : req.query.date
+        }).populate('food.item').then((mealLog) => {
+
             if (!mealLog) {
                 return next(new Error("MealLog does not exist"));
             }
-            let data = {
-                date: mealLog.date,
-                type: mealLog.type
-            }
+
             res.json({
                 success: true,
-                data
+                data :  mealLog
             });
+        }).catch(err => {
+            return next(new Error("Could not find client"));
         });
     },
 
     postMealLog: (req, res, next) => {
-        MealLog.findOne({client: req.decoded.id}, (error, mealLog) => {
-            if(error) {
-                return next(new Error("Some Error Occured"));
-            }
+        MealLog.findOne({
+            client: req.decoded.id ,
+            type: req.body.type,
+            date : req.body.date
+        }).then( (mealLog) => {
+
             if(mealLog) {
-                mealLog.date = req.body.date;
-                mealLog.type = req.params.type;
+
+                mealLog.food = req.body.food ;
                 mealLog.save((err, data) => {
                     if(err) {
                         return next(new Error("Could not save meal log"));
@@ -92,8 +98,9 @@ let mealLogController = {
             } else {
                 let data = {
                     client: req.decoded.id,
-                    type: req.params.type,
-                    date: req.body.date
+                    type: req.body.type,
+                    date: req.body.date ,
+                    food : req.body.food
                 };
                 const newMealLog = new MealLog(data);
                 newMealLog.save((error, data) => {
@@ -107,6 +114,8 @@ let mealLogController = {
                 });
             }
             
+        }).catch(err => {
+            return next(new Error("Some Error Occured"));
         })
     }
 }
