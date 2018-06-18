@@ -55,7 +55,7 @@ let mealLogController = {
 
     getTypeDate: (req, res, next) => {
 
-        console.log(req.query)
+        console.log(req.query);
 
         MealLog.findOne({
             client: req.decoded.id,

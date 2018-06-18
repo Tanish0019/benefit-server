@@ -8,7 +8,9 @@ const MealLogSchema = new mongoose.Schema({
         item: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'FoodItem',
-        }, quantity: Number
+        },
+        quantity: Number ,
+        unit : String
     }],
     client: {
         type: mongoose.Schema.Types.ObjectId,
