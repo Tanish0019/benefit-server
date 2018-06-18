@@ -9,7 +9,7 @@ export default class Token {
             name: user.name,
             email: user.email
         }, secretKey, {
-            expiresIn: 60*60
+            expiresIn: 60*60*24*7
         });
     }
 
