@@ -11,7 +11,6 @@ function escapeRegex(text) {
 let mealLogController = {
     importItems: (req, res, next) => {
 
-
         let m = mealData.forEach(item => {
             item.size = {};
             item.sugar = 0 ;
