@@ -1,5 +1,5 @@
 import Client from '../models/client';
-import Tracking from '../models/Tracking'
+import Tracking from '../models/tracking'
 
 const trackingController = {
 	getDetails: (req, res, next) => {
