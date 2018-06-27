@@ -16,6 +16,7 @@
   "author": "Borja Tur",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.264.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.1",
     "cors": "^2.8.4",

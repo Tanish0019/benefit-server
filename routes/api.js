@@ -4,6 +4,7 @@ import authRouter from './auth' ;
 import profileRoutes from './profile' ;
 import mealLogRoutes from './meallog' ;
 import trackingRoutes from './tracking';
+import workoutROutes from './workout' ;
 
 // CoachRoutes
 import coachAuthRoutes from './coach/auth';
@@ -18,6 +19,8 @@ router.use('/auth', authRouter);
 router.use('/profile', authenticate, profileRoutes);
 router.use('/mealLog', authenticate, mealLogRoutes);
 router.use('/tracking', authenticate, trackingRoutes);
+router.use('/workout', authenticate ,workoutROutes);
+
 
 router.use('/coach/auth', coachAuthRoutes);
 

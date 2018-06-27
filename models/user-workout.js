@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, {Schema} from 'mongoose';
 
 const UserWorkoutSchema = new mongoose.Schema({
 
@@ -7,7 +7,8 @@ const UserWorkoutSchema = new mongoose.Schema({
     endtime : Date ,
     w_rating : String ,
     e_rating : String ,
-    comp_routines : Number ,
+
+    date : String ,
     client : {
         type : Schema.Types.ObjectId ,
         ref : 'Client'

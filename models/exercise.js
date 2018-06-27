@@ -1,15 +1,16 @@
 import mongoose from 'mongoose';
 
 const ExerciseSchema= new mongoose.Schema({
+    sno : Number,
     name: String,
     intensity : String ,
-    met : Number ,
+    mets : Number ,
     timeTaken : Number ,
-
-    video : {
-        tutorial : String ,
-        single : String ,
-    }
+    base : String ,
+    repFormat : String ,
+    type : String ,
+    videoA : Boolean ,
+    videoB : Boolean ,
 
 });
 
