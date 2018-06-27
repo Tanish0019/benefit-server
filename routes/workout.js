@@ -6,7 +6,7 @@ let router = express.Router();
 
 // TODO: Remove this route.
 router.get('/exercise/list', workoutController.getExerciseList);
-router.get('/exercise/', workoutController.getSignedUrl);
+router.get('/exercise/:id/url', workoutController.getSignedUrl);
 router.get('/exercise/import', workoutController.importExercises);
 
 

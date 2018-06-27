@@ -10,11 +10,27 @@ import MealLog from "../models/meallog";
 
 let workoutController = {
     getSignedUrl: (req, res, next) => {
-        var params = {Bucket: 'benefit-workout-videos', Key: '12 BARBELL REVERSE LUNGE.mp4', Expires: 60 * 60};
-        var url = s3.getSignedUrl('getObject', params);
 
-        res.send(url); // expires in 60*60 seconds
-    },
+        Exercise.findOne({_id : req.params.id}).then(data => {
+            if(!data){
+                return next("Exercise not Found");
+            }
+            // res.json(data);
+            // return ;
+            let key = `${data.sno} ${data.name}.mp4` ;
+            console.log(key);
+            let params = {Bucket: 'benefit-workout-videos', Key: key, Expires: 60 * 60};
+            let url = s3.getSignedUrl('getObject', params);
+
+            res.send({
+                success : true ,
+                data : url
+            }); // expires in 60*60 seconds
+
+
+        })
+
+        },
 
     getExerciseList: (req,res,next) => {
         Exercise.find().then(data=> {
