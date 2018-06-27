@@ -102,7 +102,7 @@ let workoutController = {
             client : req.decoded.id ,
             date : req.query.date
         };
-        UserWorkout.find().populate({
+        UserWorkout.find(query).populate({
             path : 'workout' ,
             populate : {
               path : 'exercises.exercise'
