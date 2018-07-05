@@ -35,8 +35,8 @@ const ClientSchema = new mongoose.Schema({
         ref: 'Coach'
     },
     
-    premium_expiry: Date,
-    premium_start: Date,
+    premium_expiry: String,
+    premium_start: String,
 
 });
 

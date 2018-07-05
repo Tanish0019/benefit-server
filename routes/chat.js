@@ -1,7 +1,9 @@
 import express from 'express';
 let router = express.Router();
 
-import authController from '../controllers/auth-controller';
+import chatController from '../controllers/chat-controller';
 
+
+router.get('/fetch' , chatController.fetchRoom);
 
 export default router ;

@@ -29,7 +29,8 @@
     "morgan": "^1.7.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "socketio-jwt": "^4.5.0"
   },
   "devDependencies": {
     "apidoc": "^0.17.6",

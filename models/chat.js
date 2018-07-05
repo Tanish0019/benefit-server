@@ -1,10 +1,13 @@
 import mongoose from 'mongoose';
 
 let ChatSchema = mongoose.Schema({
-    created: Date,
-    content: String,
-    username: String,
-    room: String
+    timestamp: { type: Date, default: Date.now },
+    message: String,
+    author: Number,
+    room: {
+        index : true ,
+        type : String
+    }
 });
 
 // create a model from the chat schema

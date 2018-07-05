@@ -22,39 +22,20 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use('/', router);
 
+// Chatroom
 
 var numUsers = 0;
-//
-// io.use(socketioJwt.authorize({
-//     secret: config.secretKey,
-//     handshake: true
-// }));
 
 io.on('connection', (socket) => {
     var addedUser = false;
-    // console.log('hello! ', socket.decoded_token.name);
-    console.log('hello! ');
 
     // when the client emits 'new message', this listens and executes
     socket.on('new message', (data) => {
         // we tell the client to execute 'new message'
-        console.log(data);
-        console.log(socket.username);
-
-        socket.join(`${socket.decoded_token.id}`);
-        socket.broadcast.to(`${socket.decoded_token.id}`).emit('new message', {
-            message: data.message,
-            author: data.author
+        socket.broadcast.emit('new message', {
+            username: socket.username,
+            message: data
         });
-        io.in(`${socket.decoded_token.id}`).emit('new message' , {
-            message : Math.random().toString(36).substring(7),
-            author : 1
-        })
-        io.in(`${socket.decoded_token.id}`).emit('new message' , {
-
-            message : Math.random().toString(36).substring(7),
-            author : 2
-        })
     });
 
     // when the client emits 'add user', this listens and executes
@@ -62,7 +43,6 @@ io.on('connection', (socket) => {
         if (addedUser) return;
 
         // we store the username in the socket session for this client
-        console.log('Connnected');
         socket.username = username;
         ++numUsers;
         addedUser = true;
@@ -76,12 +56,25 @@ io.on('connection', (socket) => {
         });
     });
 
+    // when the client emits 'typing', we broadcast it to others
+    socket.on('typing', () => {
+        socket.broadcast.emit('typing', {
+            username: socket.username
+        });
+    });
+
+    // when the client emits 'stop typing', we broadcast it to others
+    socket.on('stop typing', () => {
+        socket.broadcast.emit('stop typing', {
+            username: socket.username
+        });
+    });
+
     // when the user disconnects.. perform this
     socket.on('disconnect', () => {
         if (addedUser) {
             --numUsers;
 
-            console.log('Disconnected');
             // echo globally that this client has left
             socket.broadcast.emit('user left', {
                 username: socket.username,
@@ -90,9 +83,6 @@ io.on('connection', (socket) => {
         }
     });
 });
-
-
-
 
 mongodb.getConnection()
   .then((msg) => {

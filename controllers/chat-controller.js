@@ -45,7 +45,8 @@ let chatController = {
 
     fetchRoom : (req , res, next) => {
         Chat.find({
-            'room': req.query.room.toLowerCase()
+            'room': req.decoded.id ,
+            'timestamp' :{ $gt: req.query.timestamp },
         }).exec().then(data => {
 
             if(data){
@@ -62,9 +63,7 @@ let chatController = {
 
 
         }).catch(err => {
-
             return next(new Error("Some Error Occured"));
-
         })
     }
 

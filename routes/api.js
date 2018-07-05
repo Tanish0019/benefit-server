@@ -5,9 +5,10 @@ import profileRoutes from './profile' ;
 import mealLogRoutes from './meallog' ;
 import trackingRoutes from './tracking';
 import workoutROutes from './workout' ;
+import chatRoutes from './chat' ;
 
 // CoachRoutes
-import coachAuthRoutes from './coach/auth';
+import coachRoutes from './coach/index';
 
 import authenticate from "../middlewares/authenticate";
 
@@ -20,9 +21,10 @@ router.use('/profile', authenticate, profileRoutes);
 router.use('/mealLog', authenticate, mealLogRoutes);
 router.use('/tracking', authenticate, trackingRoutes);
 router.use('/workout', authenticate ,workoutROutes);
+router.use('/chat', authenticate ,chatRoutes);
 
 
-router.use('/coach/auth', coachAuthRoutes);
+router.use('/coach/' ,coachRoutes);
 
 router.get('/', (req, res) => {
     res.json({

@@ -1,6 +1,5 @@
 import express from 'express';
-import workoutController from '../controllers/workout-controller' ;
-
+import workoutController from '../controllers/workout-controller';
 
 let router = express.Router();
 
