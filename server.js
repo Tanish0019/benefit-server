@@ -24,11 +24,11 @@ app.use('/', router);
 
 
 var numUsers = 0;
-//
-// io.use(socketioJwt.authorize({
-//     secret: config.secretKey,
-//     handshake: true
-// }));
+
+io.use(socketioJwt.authorize({
+    secret: config.secretKey,
+    handshake: true
+}));
 
 io.on('connection', (socket) => {
     var addedUser = false;
@@ -41,20 +41,28 @@ io.on('connection', (socket) => {
         console.log(data);
         console.log(socket.username);
 
-        socket.join(`${socket.decoded_token.id}`);
-        socket.broadcast.to(`${socket.decoded_token.id}`).emit('new message', {
-            message: data.message,
-            author: data.author
-        });
-        io.in(`${socket.decoded_token.id}`).emit('new message' , {
-            message : Math.random().toString(36).substring(7),
-            author : 1
+        let message = new Chat({
+            author : data.author ,
+            message : data.message ,
+            room : data.timestamp
         })
-        io.in(`${socket.decoded_token.id}`).emit('new message' , {
+        message.save().then(saved => {
+            socket.join(`${socket.decoded_token.id}`);
+            socket.broadcast.to(`${socket.decoded_token.id}`).emit('new message', {
+                message: data.message,
+                author: data.author
+            });
+            io.in(`${socket.decoded_token.id}`).emit('new message' , {
+                message : Math.random().toString(36).substring(7),
+                author : 1
+            })
+            io.in(`${socket.decoded_token.id}`).emit('new message' , {
 
-            message : Math.random().toString(36).substring(7),
-            author : 2
+                message : Math.random().toString(36).substring(7),
+                author : 2
+            })
         })
+
     });
 
     // when the client emits 'add user', this listens and executes

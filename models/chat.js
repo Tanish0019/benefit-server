@@ -1,12 +1,14 @@
 import mongoose from 'mongoose';
 
 let ChatSchema = mongoose.Schema({
-    timestamp: { type: Date, default: Date.now },
+    timestamp: {
+        type: Number,
+    },
     message: String,
     author: Number,
     room: {
-        index : true ,
-        type : String
+        index: true,
+        type: String
     }
 });
 
