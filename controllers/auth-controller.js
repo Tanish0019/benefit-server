@@ -6,21 +6,21 @@ import config from '../config/config' ;
 import rp from 'request-promise';
 import request from 'request';
 
-const IOS_CLIENT_ID = config.IOS_CLIENT_ID;
+// const IOS_CLIENT_ID = config.IOS_CLIENT_ID;
 // const ANDROID_CLIENT_ID = config.ANDROID_CLIENT_ID ;
-const WEB_CLIENT_ID = config.WEB_CLIENT_ID;
+// const WEB_CLIENT_ID = config.WEB_CLIENT_ID;
 
-const client = new OAuth2Client(WEB_CLIENT_ID);
+// const client = new OAuth2Client(WEB_CLIENT_ID);
 
-async function verify(token) {
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: [IOS_CLIENT_ID, WEB_CLIENT_ID]
-    });
+// async function verify(token) {
+//     const ticket = await client.verifyIdToken({
+//         idToken: token,
+//         audience: [IOS_CLIENT_ID, WEB_CLIENT_ID]
+//     });
 
-    const payload = ticket.getPayload();
-    return payload;
-}
+//     const payload = ticket.getPayload();
+//     return payload;
+// }
 
 
 let authController = {
@@ -191,6 +191,41 @@ let authController = {
             });
         });
     },
+
+    changePassword: (req, res, next) => {
+        Client.findOne({
+            email: req.decoded.email
+        }).select('name email password').then((user) => {
+            let newPassword = req.body.newPassword;
+            let validPassword = user.comparePassword(req.body.oldPassword);
+
+            if(!validPassword) {
+                next(new Error(constants.INVALID_PASS));
+            
+            } else {
+                console.log("User :" , user);
+                const data = {
+                    email: user.email,
+                    password: newPassword,
+                    name: user.name
+                }
+                let token = new Token(data).getToken();
+                
+                user.password = newPassword;
+
+                user.save((err) => {
+                    if (err) {
+                        return next(new Error("Error in Saving Profile"))
+                    } 
+                    res.json({
+                        success: true,
+                        message: "Password successfully changed",
+                        token: token
+                    }); 
+                });
+            }
+        })
+    }
 };
 
 export default authController;
