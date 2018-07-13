@@ -8,6 +8,7 @@ const ExerciseSchema= new mongoose.Schema({
     timeTaken : Number ,
     base : String ,
     repFormat : String ,
+    flow : String ,
     type : String ,
     videoA : Boolean ,
     videoB : Boolean ,

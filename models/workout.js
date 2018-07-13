@@ -14,6 +14,7 @@ const WorkoutSchema = new mongoose.Schema({
             ref: 'Exercise'
         } ,
         reps : Number ,
+        sets : Number ,
         rest : Number
     }]
 });

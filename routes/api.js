@@ -9,7 +9,6 @@ import chatRoutes from './chat' ;
 
 // CoachRoutes
 import coachRoutes from './coach/index';
-
 import authenticate from "../middlewares/authenticate";
 
 

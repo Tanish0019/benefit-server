@@ -15,12 +15,30 @@ let workoutController = {
             if(!data){
                 return next("Exercise not Found");
             }
+            let type = req.query.type;
             // res.json(data);
             // return ;
-            let key = `${data.sno} ${data.name}.mp4` ;
-            console.log(key);
-            let params = {Bucket: 'benefit-workout-videos', Key: key, Expires: 60 * 60};
-            let url = s3.getSignedUrl('getObject', params);
+            let url = '' ;
+            if(type === 'tutorial'){
+                let key = `${data.sno} ${data.name}.mp4` ;
+                console.log(key);
+                let params = {Bucket: 'benefit-workout-videos', Key: key, Expires: 60 * 60};
+                url = s3.getSignedUrl('getObject', params);
+            }
+
+            if(type === 'a'){
+                let key = `${data.sno}a ${data.name}.mp4` ;
+                console.log(key);
+                let params = {Bucket: 'benefit-workout-videos', Key: key, Expires: 60 * 60};
+                url = s3.getSignedUrl('getObject', params);
+            }
+
+            if(type === 'b'){
+                let key = `${data.sno}b ${data.name}.mp4` ;
+                console.log(key);
+                let params = {Bucket: 'benefit-workout-videos', Key: key, Expires: 60 * 60};
+                url = s3.getSignedUrl('getObject', params);
+            }
 
             res.send({
                 success : true ,
