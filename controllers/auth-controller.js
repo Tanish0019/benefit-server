@@ -6,21 +6,21 @@ import config from '../config/config' ;
 import rp from 'request-promise';
 import request from 'request';
 
-// const IOS_CLIENT_ID = config.IOS_CLIENT_ID;
-// const ANDROID_CLIENT_ID = config.ANDROID_CLIENT_ID ;
-// const WEB_CLIENT_ID = config.WEB_CLIENT_ID;
+const IOS_CLIENT_ID = config.IOS_CLIENT_ID;
+const ANDROID_CLIENT_ID = config.ANDROID_CLIENT_ID ;
+const WEB_CLIENT_ID = config.WEB_CLIENT_ID;
 
-// const client = new OAuth2Client(WEB_CLIENT_ID);
+const client = new OAuth2Client(WEB_CLIENT_ID);
 
-// async function verify(token) {
-//     const ticket = await client.verifyIdToken({
-//         idToken: token,
-//         audience: [IOS_CLIENT_ID, WEB_CLIENT_ID]
-//     });
+async function verify(token) {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: [IOS_CLIENT_ID, WEB_CLIENT_ID]
+    });
 
-//     const payload = ticket.getPayload();
-//     return payload;
-// }
+    const payload = ticket.getPayload();
+    return payload;
+}
 
 
 let authController = {
