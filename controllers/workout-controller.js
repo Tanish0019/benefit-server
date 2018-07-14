@@ -78,44 +78,7 @@ let workoutController = {
         })
     },
 
-    addWorkout: (req, res, next) => {
-
-        let data = {
-            ...req.body
-        };
-        const newWorkout = new Workout(data);
-        newWorkout.save((error, result) => {
-            if (error) {
-                return next(new Error("Could not Save Workout"));
-            }
-            res.json({
-                success: true,
-                data: result
-            });
-        });
-    },
-
-    addUserWorkout : (req,res,next)=>{
-
-        let data = {
-            client : req.body.client ,
-            workout : req.body.workout ,
-            date : req.body.date
-        }
-        const newuserWorkout = new UserWorkout(data);
-        newuserWorkout.save((error, result) => {
-            if (error) {
-                return next(new Error("Could not Save Workout for User"));
-            }
-            res.json({
-                success: true,
-                data: result
-            });
-        });
-
-    },
-
-    getUserWorkout: (req,res, next) => {
+    getUserDefaultWorkout: (req,res, next) => {
         let query = {
             client : req.decoded.id ,
             date : req.query.date

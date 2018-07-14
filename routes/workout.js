@@ -9,11 +9,7 @@ router.get('/exercise/:id/url', workoutController.getSignedUrl);
 router.get('/exercise/import', workoutController.importExercises);
 
 
-router.post('/user/add', workoutController.addUserWorkout);
-router.get('/user/get', workoutController.getUserWorkout);
-
-
-router.post('/add', workoutController.addWorkout);
+router.get('/user/get', workoutController.getUserDefaultWorkout);
 
 
 export default router ;

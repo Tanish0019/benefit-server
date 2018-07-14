@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
 router.use(function (error, req, res, next) {
     res.json({
         success: false,
-        mesage: error.message
+        message: error.message
     });
 });
 
