@@ -36,32 +36,37 @@ const workoutController = {
         };
 
 
-        Workout.findOneAndUpdate(unique, data, {upsert: true, setDefaultsOnInsert: true, new: true}).then(result => {
-            res.json({
-                success: true,
-                data: result
-            });
-        }).catch(err => {
-            if (error.name === 'MongoError') {
-                return next(new Error("Workout with Same Search Name Exists. Choose other name."));
-            }
-            return next(new Error("Could not Save Workout"));
-        });
-
-
-        // const newWorkout = new Workout(data);
-        // newWorkout.save((error, result) => {
-        //     if (error) {
-        //         if (error.name === 'MongoError') {
-        //             return next(new Error("Workout with Same Search Name Exists. Choose other name."));
-        //         }
-        //         return next(new Error("Could not Save Workout"));
-        //     }
+        // Workout.findOneAndUpdate(unique, data, {upsert: true, setDefaultsOnInsert: true, new: true}).then(result => {
         //     res.json({
         //         success: true,
         //         data: result
         //     });
+        // }).catch(err => {
+        //     if (error.name === 'MongoError') {
+        //         return next(new Error("Workout with Same Search Name Exists. Choose other name."));
+        //     }
+        //     return next(new Error("Could not Save Workout"));
         // });
+
+
+        let combined = {
+            ...data,
+            ...unique
+        };
+
+        const newWorkout = new Workout(combined);
+        newWorkout.save((error, result) => {
+            if (error) {
+                if (error.name === 'MongoError') {
+                    return next(new Error("Workout with Same Search Name Exists. Choose other name."));
+                }
+                return next(new Error("Could not Save Workout"));
+            }
+            res.json({
+                success: true,
+                data: result
+            });
+        });
     },
 
     addUserWorkout: (req, res, next) => {

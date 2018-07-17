@@ -5,7 +5,9 @@ import profileRoutes from './profile' ;
 import mealLogRoutes from './meallog' ;
 import trackingRoutes from './tracking';
 import workoutROutes from './workout' ;
+import nutritionRoutes from './nutrition' ;
 import chatRoutes from './chat' ;
+import paymentRoutes from './payment' ;
 
 // CoachRoutes
 import coachRoutes from './coach/index';
@@ -20,7 +22,9 @@ router.use('/profile', authenticate, profileRoutes);
 router.use('/mealLog', authenticate, mealLogRoutes);
 router.use('/tracking', authenticate, trackingRoutes);
 router.use('/workout', authenticate ,workoutROutes);
+router.use('/nutrition', authenticate ,nutritionRoutes);
 router.use('/chat', authenticate ,chatRoutes);
+router.use('/payment', authenticate ,paymentRoutes);
 
 
 router.use('/coach/' ,coachRoutes);

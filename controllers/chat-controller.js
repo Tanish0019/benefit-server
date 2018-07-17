@@ -45,9 +45,9 @@ let chatController = {
 
     fetchRoom : (req , res, next) => {
         console.log(req.decoded.id);
-        console.log(req.query.timestap  );
+        console.log(req.query.timestamp  );
         Chat.find({
-            'room': req.decoded.id ,
+            'room': req.query.client || req.decoded.id ,
             'timestamp' :{ $gt: req.query.timestamp },
         }).exec().then(data => {
 

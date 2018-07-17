@@ -6,7 +6,7 @@ import mongodb from './database/mongodb';
 import cors from 'cors' ;
 import SocketIO from 'socket.io' ;
 import http from 'http' ;
-import socketioJwt from 'socketio-jwt'
+import socketioJwt from 'socketio-jwt';
 import config from "./config/config";
 import Chat from './models/chat' ;
 
@@ -16,7 +16,7 @@ let app = express();
 let httpServer = http.Server(app);
 const io = SocketIO(httpServer);
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors());
@@ -32,7 +32,7 @@ io.use(socketioJwt.authorize({
 
 io.on('connection', (socket) => {
     var addedUser = false;
-    // console.log('hello! ', socket.decoded_token.name);
+    console.log('hello! ', socket.decoded_token.name);
     console.log('hello! ');
 
     // when the client emits 'new message', this listens and executes
@@ -42,26 +42,27 @@ io.on('connection', (socket) => {
         console.log(socket.username);
 
         let message = new Chat({
-            author : data.author ,
-            message : data.message ,
-            room : data.timestamp
-        })
+            author: data.author,
+            message: data.message,
+            timestamp: data.timestamp,
+            room: socket.decoded_token.id
+        });
         message.save().then(saved => {
             socket.join(`${socket.decoded_token.id}`);
             socket.broadcast.to(`${socket.decoded_token.id}`).emit('new message', {
                 message: data.message,
                 author: data.author
             });
-            io.in(`${socket.decoded_token.id}`).emit('new message' , {
-                message : Math.random().toString(36).substring(7),
-                author : 1
-            })
-            io.in(`${socket.decoded_token.id}`).emit('new message' , {
+            io.in(`${socket.decoded_token.id}`).emit('new message', {
+                message: Math.random().toString(36).substring(7),
+                author: 1
+            });
+            io.in(`${socket.decoded_token.id}`).emit('new message', {
 
-                message : Math.random().toString(36).substring(7),
-                author : 2
-            })
-        })
+                message: Math.random().toString(36).substring(7),
+                author: 2
+            });
+        });
 
     });
 
@@ -100,15 +101,13 @@ io.on('connection', (socket) => {
 });
 
 
-
-
 mongodb.getConnection()
-  .then((msg) => {
-    console.log(msg);
-    httpServer.listen(port, () => {
-      console.log(`Server running and listening in http://localhost:${port}`);
+    .then((msg) => {
+        console.log(msg);
+        httpServer.listen(port, () => {
+            console.log(`Server running and listening in http://localhost:${port}`);
+        });
+    })
+    .catch((err) => {
+        console.log(err);
     });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
