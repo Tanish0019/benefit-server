@@ -17,7 +17,8 @@ const paymentController = {
             }
         }, function (error, response, body) {
             body = JSON.parse(body);
-            res.json(body);
+            res.send("production+body.expresstoken");
+          //  res.send("production+body.expresstoken)
         });
     }
 
