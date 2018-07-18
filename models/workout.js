@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose , {Schema} from 'mongoose';
 
 const WorkoutSchema = new mongoose.Schema({
 
@@ -11,9 +11,10 @@ const WorkoutSchema = new mongoose.Schema({
     exercises: [{
         exercise: {
             type: Schema.Types.ObjectId,
-            ref: 'Routine'
+            ref: 'Exercise'
         } ,
         reps : Number ,
+        sets : Number ,
         rest : Number
     }]
 });

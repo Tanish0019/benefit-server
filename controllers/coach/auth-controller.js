@@ -46,6 +46,7 @@ const authController = {
                 // res.status(402).send({message: constants.INVALID_PASS});
             } else {
                 console.log("Coach :" , coach);
+                coach.role = 'coach' ;
                 let token = new Token(coach).getToken();
                 res.json({
                     success: true,

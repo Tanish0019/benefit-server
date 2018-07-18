@@ -1,0 +1,62 @@
+[
+  {
+    "Sno": "44",
+    "Exercise Name": "WIDE PUSH UP",
+    "Exercise Intensity": "Moderate",
+    "METS": "5",
+    "Time Taken": "8",
+    "Base": "REP",
+    "Rep Format": "Single Movement",
+    "Type": "Dumbell/Barbell/Gym",
+    "Video-A": "1",
+    "Video-B": "0"
+  },
+  {
+    "Sno": "42",
+    "Exercise Name": "OVERHEAD SLAMS",
+    "Exercise Intensity": "Moderate",
+    "METS": "3.5",
+    "Time Taken": "5",
+    "Base": "REP",
+    "Rep Format": "Single Movement",
+    "Type": "Dumbell/Barbell/Gym",
+    "Video-A": "0",
+    "Video-B": "0"
+  },
+  {
+    "Sno": "12",
+    "Exercise Name": "BARBELL REVERSE LUNGE",
+    "Exercise Intensity": "High",
+    "METS": "6",
+    "Time Taken": "20",
+    "Base": "REP",
+    "Rep Format": "Single Movement",
+    "Type": "Dumbell/Barbell/Gym",
+    "Video-A": "0",
+    "Video-B": "0"
+  },
+  {
+    "Sno": "17",
+    "Exercise Name": "ELEVATED GLUTE BRIDGES",
+    "Exercise Intensity": "Moderate",
+    "METS": "3.5",
+    "Time Taken": "14",
+    "Base": "REP",
+    "Rep Format": "Single Movement",
+    "Type": "Body Weight",
+    "Video-A": "0",
+    "Video-B": "0"
+  },
+  {
+    "Sno": "47",
+    "Exercise Name": "STACKED PUSH UP",
+    "Exercise Intensity": "Moderate",
+    "METS": "5",
+    "Time Taken": "20",
+    "Base": "REP",
+    "Rep Format": "Single Movement",
+    "Type": "Body Weight",
+    "Video-A": "1",
+    "Video-B": "0"
+  }
+]

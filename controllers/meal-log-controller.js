@@ -40,15 +40,13 @@ let mealLogController = {
         let keyword = req.params.keyword ;
         console.log(keyword)
         const regex = new RegExp('^'+keyword+'$', "i");
-        FoodItem.find({'keywords': {$options:'i', $regex: keyword }}, function(error, items){
-            if(error){
-                return next(error)
-            }
-
+        FoodItem.find({'keywords': {$options:'i', $regex: keyword }}).limit(5).then((items) => {
             res.json({
                 success : true ,
                 data : items
             })
+        } , (err) => {
+            return next(error)
         });
     },
 
