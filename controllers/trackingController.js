@@ -21,7 +21,13 @@ const trackingController = {
             client: req.decoded.id ,
             date: req.body.date,
             //time: req.body.time
-        }, req.body, {
+        }, {
+            $set: {
+                time: time + req.body.time,
+                distance: distance + req.body.distance
+            }
+        }
+        , {
         	upsert: true,
         	new: true
         }).then((data) => {
