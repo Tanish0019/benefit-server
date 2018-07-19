@@ -20,7 +20,7 @@ const trackingController = {
         Tracking.findOneAndUpdate({
             client: req.decoded.id ,
             date: req.body.date,
-            time: req.body.time
+            //time: req.body.time
         }, req.body, {
         	upsert: true,
         	new: true
