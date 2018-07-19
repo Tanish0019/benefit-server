@@ -22,9 +22,9 @@ const trackingController = {
             date: req.body.date,
             //time: req.body.time
         }, {
-            $set: {
-                time: time + req.body.time,
-                distance: distance + req.body.distance
+            $inc: {
+                time:req.body.time,
+                distance:  req.body.distance
             }
         }
         , {
