@@ -8,7 +8,7 @@ import SocketIO from 'socket.io' ;
 import http from 'http' ;
 import socketioJwt from 'socketio-jwt';
 import config from "./config/config";
-import Chat from './models/chat' ;
+// import Chat from './models/chat' ;
 
 const port = process.env.PORT || 5000;
 
@@ -31,73 +31,98 @@ io.use(socketioJwt.authorize({
 }));
 
 io.on('connection', (socket) => {
-    var addedUser = false;
-    console.log('hello! ', socket.decoded_token.name);
-    console.log('hello! ');
 
-    // when the client emits 'new message', this listens and executes
-    socket.on('new message', (data) => {
-        // we tell the client to execute 'new message'
-        console.log(data);
-        console.log(socket.username);
-
-        let message = new Chat({
-            author: data.author,
-            message: data.message,
-            timestamp: data.timestamp,
-            room: socket.decoded_token.id
-        });
-        message.save().then(saved => {
-            socket.join(`${socket.decoded_token.id}`);
-            socket.broadcast.to(`${socket.decoded_token.id}`).emit('new message', {
-                message: data.message,
-                author: data.author
-            });
-            io.in(`${socket.decoded_token.id}`).emit('new message', {
-                message: Math.random().toString(36).substring(7),
-                author: 1
-            });
-            io.in(`${socket.decoded_token.id}`).emit('new message', {
-
-                message: Math.random().toString(36).substring(7),
-                author: 2
-            });
-        });
-
+    socket.on('enter conversation', (conversation) => {
+        socket.join(conversation);
     });
 
-    // when the client emits 'add user', this listens and executes
-    socket.on('add user', (username) => {
-        if (addedUser) return;
+    socket.on('new message', (conversation) => {
+        //NEED TO ADD STUFF HERE ACCORDING TO ANDROID EVENTS
 
-        // we store the username in the socket session for this client
-        console.log('Connnected');
-        socket.username = username;
-        ++numUsers;
-        addedUser = true;
-        socket.emit('login', {
-            numUsers: numUsers
-        });
-        // echo globally (all clients) that a person has connected
-        socket.broadcast.emit('user joined', {
-            username: socket.username,
-            numUsers: numUsers
-        });
+        io.sockets.in(conversation).emit('')
     });
 
-    // when the user disconnects.. perform this
     socket.on('disconnect', () => {
-        if (addedUser) {
-            --numUsers;
+        console.log("disconnected");
+    })
 
-            console.log('Disconnected');
-            // echo globally that this client has left
-            socket.broadcast.emit('user left', {
-                username: socket.username,
-                numUsers: numUsers
-            });
-        }
-    });
+
+    // var addedUser = false;
+    // console.log('hello! ', socket.decoded_token.name);
+    // console.log('hello! ', socket.decoded_token);
+
+    // // when the client emits 'new message', this listens and executes
+    // socket.on('new message', (data) => {
+    //     // we tell the client to execute 'new message'
+    //     console.log(data);
+    //     console.log(socket.username);
+
+    //     let message = new Chat({
+    //         author: data.author,
+    //         message: data.message,
+    //         timestamp: data.timestamp,
+    //         room: socket.decoded_token.id
+    //     });
+    //     message.save().then(saved => {
+    //         socket.join(`${socket.decoded_token.id}`);
+    //         socket.broadcast.to(`${socket.decoded_token.id}`).emit('new message', {
+    //             message: data.message,
+    //             author: data.author
+    //         });
+    //         io.in(`${socket.decoded_token.id}`).emit('new message', {
+    //             message: Math.random().toString(36).substring(7),
+    //             author: 1
+    //         });
+    //         io.in(`${socket.decoded_token.id}`).emit('new message', {
+
+    //             message: Math.random().toString(36).substring(7),
+    //             author: 2
+    //         });
+    //     });
+
+    // });
+
+    // // when the client emits 'add user', this listens and executes
+    // socket.on('add user', (username) => {
+    //     if (addedUser) return;
+
+    //     // we store the username in the socket session for this client
+    //     console.log('Connnected');
+    //     socket.username = username;
+    //     usernames[username] = socket.id;
+    //     ++numUsers;
+    //     addedUser = true;
+    //     socket.emit('login', {
+    //         numUsers: numUsers
+    //     });
+    //     // echo globally (all clients) that a person has connected
+    //     socket.broadcast.emit('user joined', {
+    //         username: socket.username,
+    //         numUsers: numUsers
+    //     });
+    // });
+
+    // socket.on('check_user', function(asker, id){
+    //     io.sockets.socket(usernames[asker]).emit('msg_user_found', check_key(id));
+    // });
+
+    // socket.on('sendChat', () => {
+    //     io.sockets.emit('updateChat', )
+    // })
+
+    // // when the user disconnects.. perform this
+    // socket.on('disconnect', () => {
+    //     if (addedUser) {
+    //         --numUsers;
+
+    //         console.log('Disconnected');
+    //         // echo globally that this client has left
+    //         socket.broadcast.emit('user left', {
+    //             username: socket.username,
+    //             numUsers: numUsers
+    //         });
+    //     }
+    // });
 });
 
 
